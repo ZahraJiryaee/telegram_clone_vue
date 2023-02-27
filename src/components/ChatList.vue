@@ -1,6 +1,12 @@
 <template>
   <div class="container">
-    <div v-for="user in filteredUsers" :key="user.id" class="flexWrapper">
+    <div
+      v-for="user in filteredUsers"
+      :key="user.id"
+      @click="changeMessage(user.id)"
+      class="flexWrapper"
+      :class="{ highlight: selectedItem == user.id }"
+    >
       <div class="columnLeft">
         <div class="imgContainer">
           <img :src="user.avatar" :alt="user.name" width="52" height="52" />
@@ -27,6 +33,7 @@ export default {
   name: "ChatList",
   props: {
     search: String,
+    selectedItem: Number,
   },
   data: () => ({
     users: [],
@@ -46,6 +53,9 @@ export default {
           .every((v) => item.name.toLowerCase().includes(v));
       });
     },
+    changeMessage(id) {
+      this.$emit("getMessage", id);
+    },
   },
   created() {
     this.loadUsers();
@@ -64,6 +74,7 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  overflow-y: scroll !important;
 
   .flexWrapper {
     display: flex;
@@ -71,6 +82,11 @@ export default {
     align-items: center;
 
     padding: 0 1rem;
+
+    &.highlight {
+      background-color: #f6f0f8;
+      border-radius: 22px;
+    }
 
     .columnLeft {
       display: flex;
