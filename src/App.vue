@@ -3,9 +3,24 @@
     class="container"
     :class="{ showDetailFullScreen: isDetailShowedCompeltely }"
   >
-    <div class="chatList">
+    <div class="columnLeft">
+      <label class="header">
+        <!-- menu -->
+        <div class="menuIcon">
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+        <!-- input -->
+        <input
+          type="search"
+          class="searchInput"
+          placeholder="Search"
+          v-model="searchInput"
+        />
+      </label>
       <!-- chat list -->
-      <p>chat list</p>
+      <ChatList />
       <button @click="showDetailCompeltely(true)">btn 1</button>
     </div>
     <div class="chatDetail">
@@ -17,15 +32,17 @@
 </template>
 
 <script>
+import ChatList from "@/components/ChatList";
+
 export default {
   name: "App",
-
+  components: { ChatList },
   data() {
     return {
       isDetailShowedCompeltely: false,
+      searchInput: "",
     };
   },
-
   methods: {
     showDetailCompeltely(value) {
       this.isDetailShowedCompeltely = value;
@@ -55,7 +72,7 @@ export default {
     min-width: 100%;
   }
 
-  .chatList {
+  .columnLeft {
     display: flex;
     flex-direction: column;
     flex: 2;
@@ -81,6 +98,40 @@ export default {
       max-width: 100%;
       width: 100%;
     }
+
+    .header {
+      position: relative;
+      background-color: transparent;
+      padding: 1rem;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1.4rem;
+
+      .menuIcon > div {
+        width: 25px;
+        height: 2px;
+        background-color: black;
+        margin: 6px 0;
+      }
+
+      input {
+        width: 100%;
+        height: 44px;
+        background-color: #ffffff25 !important;
+        outline: none;
+        border-radius: 22px;
+        padding-left: 35px;
+        padding-top: 4px;
+        padding-bottom: 4px;
+        color: #a39698;
+
+        &::placeholder {
+          color: #a39698;
+        }
+      }
+    }
   }
 
   .chatDetail {
@@ -95,7 +146,7 @@ export default {
     }
 
     @media only screen and (min-width: 601px) and (max-width: 925px) {
-      transform: translate3d(26.5625rem, 0, 0);
+      transform: translate3d(26.5rem, 0, 0);
       transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
   }
@@ -103,7 +154,7 @@ export default {
 
 .showDetailFullScreen.container {
   @media only screen and (max-width: 925px) {
-    .chatList {
+    .columnLeft {
       transform: translate3d(-100%, 0, 0);
     }
 
@@ -114,7 +165,7 @@ export default {
 
   @media only screen and (max-width: 601px) {
     grid-template-rows: 0 100%;
-    .chatList {
+    .columnLeft {
       transform: translate3d(-100%, 0, 0);
     }
 
