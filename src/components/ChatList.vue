@@ -74,7 +74,6 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  overflow-y: scroll !important;
 
   .flexWrapper {
     display: flex;
@@ -82,6 +81,8 @@ export default {
     align-items: center;
 
     padding: 0 1rem;
+
+    cursor: pointer;
 
     &.highlight {
       background-color: #f6f0f8;

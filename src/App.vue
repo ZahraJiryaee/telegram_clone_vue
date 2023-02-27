@@ -6,7 +6,7 @@
     <div class="columnLeft">
       <label class="header">
         <!-- menu -->
-        <div class="menuIcon">
+        <div class="menuIcon" @click="displayProfileTab(true)">
           <div></div>
           <div></div>
           <div></div>
@@ -57,6 +57,44 @@
       <!-- chat detail -->
       <ChatDetail :messages="filteredMessages" />
     </div>
+    <!-- Profile  -->
+    <div class="profileTab" :class="{ display: isProfileTabDisplayed }">
+      <img
+        src="https://img.icons8.com/nolan/64/delete-sign.png"
+        class="closeIcon"
+        alt="close"
+        @click="displayProfileTab(false)"
+      />
+
+      <img
+        src="https://randomuser.me/api/portraits/women/5.jpg"
+        alt="profile"
+        width="120"
+        height="120"
+        class="profileAvatar"
+      />
+      <h1>Zahra Jiryaee</h1>
+      <p>+989351010110</p>
+      <hr />
+      <div class="profileList">
+        <div>
+          <img src="https://img.icons8.com/stickers/100/null/live-folder.png" />
+          <p>My Files</p>
+        </div>
+
+        <div>
+          <img
+            src="https://img.icons8.com/color/48/null/member-skin-type-7.png"
+          />
+          <p>Shared With Me</p>
+        </div>
+
+        <div>
+          <img src="https://img.icons8.com/emoji/48/null/glowing-star.png" />
+          <p>Starred</p>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -72,6 +110,7 @@ export default {
   data() {
     return {
       isDetailShowedCompeltely: false,
+      isProfileTabDisplayed: false,
       searchInput: "",
       messages: [],
       filteredMessages: "",
@@ -90,6 +129,9 @@ export default {
   methods: {
     showDetailCompeltely(value) {
       this.isDetailShowedCompeltely = value;
+    },
+    displayProfileTab(value) {
+      this.isProfileTabDisplayed = value;
     },
     loadMessages() {
       const { messages } = mockData;
@@ -132,6 +174,7 @@ export default {
 
 <style lang="scss" scoped>
 .container {
+  position: relative;
   display: flex;
   width: 100%;
   min-width: 100%;
@@ -187,11 +230,15 @@ export default {
       align-items: center;
       gap: 1.4rem;
 
-      .menuIcon > div {
-        width: 25px;
-        height: 2px;
-        background-color: black;
-        margin: 6px 0;
+      .menuIcon {
+        cursor: pointer;
+
+        > div {
+          width: 25px;
+          height: 2px;
+          background-color: black;
+          margin: 6px 0;
+        }
       }
 
       input {
@@ -259,6 +306,57 @@ export default {
 
         .arrowIcon {
           transform: rotate(-90deg);
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  .profileTab {
+    position: absolute;
+    background: black;
+    color: white;
+    width: 300px;
+    height: 100%;
+    border-radius: 0 10px 10px 0;
+    padding: 1rem;
+
+    min-height: 100vh !important;
+    z-index: 100;
+
+    transform: translate3d(-100%, 0, 0);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &.display {
+      transform: translate3d(0%, 0, 0);
+    }
+
+    .closeIcon {
+      position: absolute;
+      top: 10px;
+      left: 270px;
+      width: 40px;
+      height: auto;
+      cursor: pointer;
+    }
+
+    .profileAvatar {
+      border-radius: 50%;
+    }
+
+    .profileList {
+      display: flex;
+      flex-direction: column;
+
+      > div {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 1rem;
+
+        img {
+          width: 30px;
+          height: auto;
         }
       }
     }
