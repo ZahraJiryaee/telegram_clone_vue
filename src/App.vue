@@ -20,7 +20,7 @@
         />
       </label>
       <!-- chat list -->
-      <ChatList />
+      <ChatList :search="searchInput" />
       <button @click="showDetailCompeltely(true)">btn 1</button>
     </div>
     <div class="chatDetail">

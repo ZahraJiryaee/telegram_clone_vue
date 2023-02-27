@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div v-for="user in users" :key="user.id" class="flexWrapper">
+    <div v-for="user in filteredUsers" :key="user.id" class="flexWrapper">
       <div class="columnLeft">
         <div class="imgContainer">
           <img :src="user.avatar" :alt="user.name" width="52" height="52" />
@@ -25,17 +25,35 @@ import mockData from "@/mock/db.mock.json";
 
 export default {
   name: "ChatList",
+  props: {
+    search: String,
+  },
   data: () => ({
     users: [],
+    filteredUsers: [],
   }),
   methods: {
     loadUsers() {
       const { users } = mockData;
       this.users = users;
+      this.filteredUsers = users;
+    },
+    resultOfSearch(searchValue) {
+      this.filteredUsers = this.users.filter((item) => {
+        return searchValue
+          .toLowerCase()
+          .split(" ")
+          .every((v) => item.name.toLowerCase().includes(v));
+      });
     },
   },
   created() {
     this.loadUsers();
+  },
+  watch: {
+    search: function (newVal) {
+      this.resultOfSearch(newVal);
+    },
   },
 };
 </script>
